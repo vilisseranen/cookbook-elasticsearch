@@ -5,7 +5,7 @@ Wants=network-online.target
 After=network-online.target
 
 [Service]
-<% if @version == "6.0.0" -%>
+<% if @version >= "6.0.0" -%>
 RuntimeDirectory=elasticsearch
 Environment=ES_PATH_CONF=/etc/elasticsearch
 <% else -%>
@@ -22,7 +22,7 @@ WorkingDirectory=<%= @path_home %>
 User=<%= @es_user %>
 Group=<%= @es_group %>
 
-<% if @version == "6.0.0" -%>
+<% if @version >= "6.0.0" -%>
 ExecStart=<%= @path_home %>/bin/elasticsearch -p ${PID_DIR}/elasticsearch.pid --quiet
 <% else -%>
 ExecStartPre=<%= @path_home %>/bin/elasticsearch-systemd-pre-exec
@@ -48,7 +48,7 @@ StandardError=inherit
 LimitNOFILE=<%= @nofile_limit %>
 
 # Specifies the maximum number of processes
-<% if @version == "6.0.0" -%>
+<% if @version >= "6.0.0" -%>
 LimitNPROC=4096
 <% else -%>
 LimitNPROC=2048
